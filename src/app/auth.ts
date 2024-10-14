@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { AuthError } from "./api/errors/auth-error";
+import { IError } from "@/types";
 
 /**
  * Next auth
@@ -8,8 +9,12 @@ import { AuthError } from "./api/errors/auth-error";
 export const { auth, handlers, signIn, signOut, unstable_update } = NextAuth({
   debug: true,
   secret: process.env.AUTH_SECRET,
+  session: {
+    strategy: "jwt",
+    maxAge: 60 * 60 * 1000,
+  },
   jwt: {
-    maxAge: 24 * 60 * 60,
+    maxAge: 60 * 60 * 1000,
   },
   providers: [
     Credentials({
@@ -27,14 +32,29 @@ export const { auth, handlers, signIn, signOut, unstable_update } = NextAuth({
         const res = await fetch(`${process.env.NEXTAUTH_URL}/api/signin`, {
           method: "POST",
           body: JSON.stringify(body),
+          headers: {
+            "Content-Type": "application/json",
+          },
         });
 
-        console.log(body, res.status);
-        if (!res.ok) throw new AuthError("Authentication failed!");
-
         const data = await res.json();
+        if (res.status === 401)
+          throw new AuthError((data.error as IError).message);
+
         return data;
       },
     }),
   ],
+  callbacks: {
+    jwt({ token, user }) {
+      //console.log("----", { token, user, account, profile, session });
+      return { ...token, ...user };
+    },
+    session({ token, session }) {
+      // console.log(session, user, token);
+      session.user = token;
+      return session;
+    },
+  },
+  pages: {},
 });

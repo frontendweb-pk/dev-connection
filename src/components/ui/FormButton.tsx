@@ -1,6 +1,6 @@
+"use client";
 import { useFormStatus } from "react-dom";
 import Button, { ButtonProps } from "./Button";
-import { Loader } from "lucide-react";
 
 export type FormButtonProps = ButtonProps & {};
 export default function FormButton({ children, ...rest }: FormButtonProps) {

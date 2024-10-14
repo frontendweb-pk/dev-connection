@@ -2,7 +2,7 @@
 
 import { IZodValidation } from "@/types";
 import { SigninSchema } from "../api/schema/user";
-import { signIn } from "../auth";
+import { signIn, signOut } from "../auth";
 import { zodValidationFormat } from "@/utils/zod-error-format";
 
 export async function login(prevState: IZodValidation, formData: FormData) {
@@ -13,7 +13,6 @@ export async function login(prevState: IZodValidation, formData: FormData) {
 
   // validation
   const validation = SigninSchema.safeParse(body);
-  console.log("v", validation.error?.errors);
   if (!validation.success) {
     return {
       ...prevState,
@@ -29,4 +28,8 @@ export async function login(prevState: IZodValidation, formData: FormData) {
 
   prevState.data = result;
   return prevState;
+}
+
+export async function Logout() {
+  await signOut();
 }
