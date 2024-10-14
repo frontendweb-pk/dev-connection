@@ -7,16 +7,23 @@ export interface IUserDoc extends Document<IUser>, IUser {}
 
 const schema = new Schema(
   {
-    first_name: { type: String, required: true },
-    last_name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    mobile: { type: String, required: true, unique: true },
+    first_name: { type: String, required: true, trim: true },
+    last_name: { type: String, required: true, trim: true },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      index: true,
+    },
+    password: { type: String, required: true, minLength: 8, maxLength: 16 },
+    mobile: { type: String, required: true, unique: true, index: true },
     role: {
       type: String,
       required: true,
       default: "user",
       enum: ["user", "admin", "superadmin"],
+      lowercase: true,
     },
     verifyEmail: { type: Boolean, default: false },
     accessToken: { type: String, default: "" },

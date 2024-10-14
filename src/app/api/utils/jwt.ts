@@ -8,10 +8,10 @@ const DEFAULT_OPTION: JwtOption = {
 
 export class Jwt {
   static genToken(payload: JwtPayload, option: JwtOption = DEFAULT_OPTION) {
-    return JWT.sign(payload, process.env.NEXT_SECRET, option);
+    return JWT.sign(payload, process.env.AUTH_SECRET, option);
   }
   static compareToken(token: string) {
-    return JWT.verify(token, process.env.NEXT_SECRET, (error, done) => {
+    return JWT.verify(token, process.env.AUTH_SECRET, (error, done) => {
       if (error) throw new Error(error.message);
       return true;
     });
