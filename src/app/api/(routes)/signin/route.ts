@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       user.toJSON({
-        transform(doc, ret, options) {
+        transform(_, ret) {
           delete ret.password;
         },
       }),
