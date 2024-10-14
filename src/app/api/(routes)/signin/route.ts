@@ -9,6 +9,7 @@ import { IUserDoc, User } from "../../models/user";
 import { Password } from "../../utils/password";
 import { AuthError } from "../../errors/auth-error";
 import { Jwt } from "../../utils/jwt";
+import { connectDb } from "@/lib/db";
 
 /**
  * User sign in route
@@ -17,6 +18,9 @@ import { Jwt } from "../../utils/jwt";
  */
 const TOKEN_EXPIRATION_MS = 3600000;
 export async function POST(req: NextRequest) {
+  // db connection
+  await connectDb();
+
   const body = (await req.json()) as ISignin;
 
   // request validation

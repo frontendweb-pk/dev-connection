@@ -6,4 +6,7 @@ export const AppContent = {
   update: "Update",
   post: "Post",
   user: "User",
+  signIn: "Sign in",
+  signUp: "Sign up",
+  signOut: "Sign out",
 };

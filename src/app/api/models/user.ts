@@ -16,7 +16,7 @@ const schema = new Schema(
       lowercase: true,
       index: true,
     },
-    password: { type: String, required: true, minLength: 8, maxLength: 16 },
+    password: { type: String, required: true },
     mobile: { type: String, required: true, unique: true, index: true },
     role: {
       type: String,

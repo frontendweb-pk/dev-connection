@@ -1,7 +1,7 @@
 import { z } from "zod";
 const mobileRegex = /^[2-9]\d{2}-\d{3}-\d{4}$/; // Adjust based on your requirements
 const strongPasswordRegex =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,16}$/;
+  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,16}$/;
 
 export const UserSchema = z.object({
   first_name: z.string().min(1, { message: "First name is required" }),
