@@ -1,0 +1,12 @@
+import { IError } from "@/types";
+
+export abstract class CustomError extends Error {
+  abstract status: number;
+
+  constructor(public message: string) {
+    super(message);
+    Object.setPrototypeOf(this, CustomError.prototype);
+  }
+
+  abstract renderError(): IError;
+}

@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 interface Params {
-  params: {
-    postId: string;
-  };
+  params: { postId: string };
 }
 /**
  * User sign up route
