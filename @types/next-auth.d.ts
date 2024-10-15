@@ -5,7 +5,7 @@ import { DefaultJWT } from "next-auth/jwt";
 declare module "next-auth" {
   interface User extends IUser {}
   interface Session {
-    user: IUser & DefaultSession["user"];
+    currentUser: IUser;
   }
 }
 

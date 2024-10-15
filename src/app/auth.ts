@@ -7,11 +7,12 @@ import { IError } from "@/types";
  * Next auth
  */
 export const { auth, handlers, signIn, signOut, unstable_update } = NextAuth({
-  debug: true,
+  debug: process.env.NODE_ENV === "development",
   secret: process.env.AUTH_SECRET,
   session: {
     strategy: "jwt",
-    maxAge: 60 * 60 * 1000,
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    updateAge: 60 * 60 * 1000,
   },
   jwt: {
     maxAge: 60 * 60 * 1000,
@@ -46,13 +47,14 @@ export const { auth, handlers, signIn, signOut, unstable_update } = NextAuth({
     }),
   ],
   callbacks: {
-    jwt({ token, user }) {
+    jwt({ token, user, account }) {
+      console.log("TOKEN", token, user);
       //console.log("----", { token, user, account, profile, session });
-      return { ...token, ...user };
+      return token;
     },
     session({ token, session }) {
       // console.log(session, user, token);
-      session.user = token;
+      // if (session.currentUser) session.currentUser = token;
       return session;
     },
   },
