@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { isAuth } from "../../middleware/auth";
 
 /**
  * User sign up route
@@ -6,5 +7,7 @@ import { NextResponse } from "next/server";
  * @returns
  */
 export async function GET() {
-  return NextResponse.json({ posts: [] }, { status: 201 });
+  const user = await isAuth();
+
+  return NextResponse.json({ posts: user }, { status: 201 });
 }

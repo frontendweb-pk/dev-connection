@@ -1,21 +1,18 @@
-import NextAuth from "next-auth";
+import NextAuth, { AuthError } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { AuthError } from "./api/errors/auth-error";
-import { IError } from "@/types";
 
 /**
  * Next auth
  */
 export const { auth, handlers, signIn, signOut, unstable_update } = NextAuth({
-  debug: process.env.NODE_ENV === "development",
+  // debug: process.env.NODE_ENV === "development",
   secret: process.env.AUTH_SECRET,
   session: {
     strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60 * 1000,
-    updateAge: 60 * 60 * 1000,
+    maxAge: 1 * 60 * 60,
   },
   jwt: {
-    maxAge: 60 * 60 * 1000,
+    maxAge: 1 * 60 * 60,
   },
   providers: [
     Credentials({
@@ -25,38 +22,59 @@ export const { auth, handlers, signIn, signOut, unstable_update } = NextAuth({
         password: { type: "password" },
       },
       async authorize(credentials) {
-        const body = {
-          email: credentials.email,
-          password: credentials.password,
-        };
-        console.log("b", body);
+        if (credentials === null) return null;
         const res = await fetch(`${process.env.NEXTAUTH_URL}/api/signin`, {
           method: "POST",
-          body: JSON.stringify(body),
-          headers: {
-            "Content-Type": "application/json",
-          },
+          body: JSON.stringify({
+            email: credentials?.email,
+            password: credentials?.password,
+          }),
+          headers: { "Content-Type": "application/json" },
         });
 
         const data = await res.json();
-        if (res.status === 401)
-          throw new AuthError((data.error as IError).message);
+        if (!res.ok) {
+          throw new AuthError(data.error?.message);
+        }
 
         return data;
       },
     }),
   ],
   callbacks: {
-    jwt({ token, user, account }) {
-      console.log("TOKEN", token, user);
-      //console.log("----", { token, user, account, profile, session });
+    jwt({ token, user }) {
+      if (user) {
+        token.accessToken = user.accessToken;
+        token.avatar = user.avatar;
+        token.name = `${user.first_name} ${user.last_name}`;
+        token.id = user.id;
+        token.mobile = user.mobile;
+        token.role = user.role;
+        token.expireAccessToken = user.expireAccessToken;
+        token.exp = Math.floor(
+          new Date(user.expireAccessToken).getTime() / 1000
+        );
+      }
       return token;
     },
-    session({ token, session }) {
-      // console.log(session, user, token);
-      // if (session.currentUser) session.currentUser = token;
+    session({ session, token }) {
+      if (token) {
+        session.user = token as any;
+      }
+      if (token.exp) {
+        session.expires = new Date(token.exp * 1000).toISOString() as any;
+      }
       return session;
     },
   },
-  pages: {},
+
+  logger: {
+    debug(message, metadata) {
+      if (process.env.NODE_ENV === "development")
+        console.log(message, metadata);
+    },
+    error(code, ...message) {
+      if (process.env.NODE_ENV === "development") console.error(code, message);
+    },
+  },
 });

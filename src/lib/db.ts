@@ -17,7 +17,9 @@ if (!cached) {
 export async function connectDb() {
   if (cached.conn) return cached.conn;
   try {
-    cached.conn = await mongoose.connect(MONGODB_URI);
+    cached.conn = await mongoose.connect(MONGODB_URI, {
+      serverSelectionTimeoutMS: 5000, // Adjust as needed
+    });
     console.log("Database connected!");
     return cached.conn;
   } catch (error) {

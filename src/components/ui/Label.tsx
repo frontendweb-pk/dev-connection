@@ -8,7 +8,7 @@ export type LabelProps = React.LabelHTMLAttributes<HTMLLabelElement> & {};
  * @returns
  */
 export default function Label({ children, className, ...rest }: LabelProps) {
-  const classes = classNames("text-sm text-slate-600 mb-2 block");
+  const classes = classNames("text-sm text-slate-600 mb-2 block", className);
   return (
     <label className={classes} {...rest}>
       {children}

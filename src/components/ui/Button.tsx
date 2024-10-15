@@ -21,7 +21,7 @@ export default function Button({
     className
   );
   return (
-    <button className={classes} {...rest}>
+    <button type={type} className={classes} {...rest}>
       {loading && <Loader className="animate-spin" size={16} />} {children}
     </button>
   );

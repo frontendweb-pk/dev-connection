@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import FormGroup, { FormGroupProps } from "./FormGroup";
 import Label, { LabelProps } from "./Label";
-import { error } from "console";
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   label?: string;
