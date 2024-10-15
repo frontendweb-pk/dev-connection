@@ -7,7 +7,7 @@ export async function isAuth() {
   const session = await auth();
 
   const token = session?.user.accessToken;
-  const verify = Jwt.compareToken(token!) as any;
+  const verify = Jwt.compareToken(token!) as void | boolean;
   if (!verify) throw new AuthError("Invalid token");
 
   const user = await User.findById(session?.user.id);

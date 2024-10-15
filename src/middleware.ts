@@ -1,17 +1,25 @@
 import { auth } from "@/app/auth";
-import { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
-export default auth((req: NextRequest) => {
+export default auth((req) => {
   const pathname = req.nextUrl.pathname;
-  if (pathname.startsWith("/admin")) {
-    console.log("i am middleware", pathname, req.nextUrl.password);
+  const role = req.auth?.user.role;
+
+  if (role !== "admin" && pathname.startsWith("/admin")) {
+    return NextResponse.redirect(
+      new URL(decodeURIComponent("/?callbackUrl=" + pathname), req.url)
+    );
   }
+
+  if (role !== "user" && pathname.startsWith("/user")) {
+    return NextResponse.redirect(
+      new URL(decodeURIComponent("/?callbackUrl=" + pathname), req.url)
+    );
+  }
+
+  return NextResponse.next();
 });
 
-// export const middleware = auth(function middleware(req: NextRequest) {
-//   console.log("I am middleware", pathname);
-// });
-
 export const config = {
-  matcher: ["/admin/:path*", "/user/:path*"],
+  matcher: ["/admin/:path*", "/user/:path*", "/api/(.*)"],
 };

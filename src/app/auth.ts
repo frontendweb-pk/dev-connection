@@ -1,4 +1,5 @@
-import NextAuth, { AuthError } from "next-auth";
+import NextAuth, { AuthError, User } from "next-auth";
+import { AdapterUser } from "next-auth/adapters";
 import Credentials from "next-auth/providers/credentials";
 
 /**
@@ -42,6 +43,10 @@ export const { auth, handlers, signIn, signOut, unstable_update } = NextAuth({
     }),
   ],
   callbacks: {
+    authorized: async ({ auth }) => {
+      // Logged in users are authenticated, otherwise redirect to login page
+      return !!auth;
+    },
     jwt({ token, user }) {
       if (user) {
         token.accessToken = user.accessToken;
@@ -51,6 +56,7 @@ export const { auth, handlers, signIn, signOut, unstable_update } = NextAuth({
         token.mobile = user.mobile;
         token.role = user.role;
         token.expireAccessToken = user.expireAccessToken;
+        token.verifyEmail = user.verifyEmail;
         token.exp = Math.floor(
           new Date(user.expireAccessToken).getTime() / 1000
         );
@@ -59,10 +65,11 @@ export const { auth, handlers, signIn, signOut, unstable_update } = NextAuth({
     },
     session({ session, token }) {
       if (token) {
-        session.user = token as any;
+        session.user = token as User & AdapterUser;
       }
       if (token.exp) {
-        session.expires = new Date(token.exp * 1000).toISOString() as any;
+        session.expires = new Date(token.exp * 1000).toISOString() as Date &
+          string;
       }
       return session;
     },

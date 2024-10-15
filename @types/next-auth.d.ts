@@ -3,15 +3,8 @@ import { User } from "next-auth";
 import { DefaultJWT } from "next-auth/jwt";
 
 declare module "next-auth" {
-  interface User {
-    accessToken: string;
-    role: string;
-    mobile: string;
-    verifyEmail: boolean;
-    first_name: string;
-    last_name: string;
-    avatar: string;
-    expireAccessToken: string;
+  interface User extends IUser {
+    emailVerified: Date;
   }
   interface Session {
     user: User;

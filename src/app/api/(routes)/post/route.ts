@@ -8,6 +8,5 @@ import { isAuth } from "../../middleware/auth";
  */
 export async function GET() {
   const user = await isAuth();
-
   return NextResponse.json({ posts: user }, { status: 201 });
 }
