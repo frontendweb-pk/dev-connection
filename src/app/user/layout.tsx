@@ -1,7 +1,14 @@
+import Header from "@/components/layout/Header";
+
 export default function AdminLayout({
-  children,
+	children,
 }: {
-  children: React.ReactNode;
+	children: React.ReactNode;
 }) {
-  return <div>User layout {children}</div>;
+	return (
+		<>
+			<Header />
+			<main>{children}</main>
+		</>
+	);
 }

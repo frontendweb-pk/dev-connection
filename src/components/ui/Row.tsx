@@ -1,3 +1,8 @@
+"use client";
+
+import { useSession } from "next-auth/react";
+
 export default function Row() {
-  return <div></div>;
+	const s = useSession();
+	return <div>sss{JSON.stringify(s)}</div>;
 }
