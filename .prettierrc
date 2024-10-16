@@ -18,5 +18,18 @@
 	"tabWidth": 2,
 	"useTabs": true,
 	"embeddedLanguageFormatting": "auto",
-	"plugins": ["prettier-plugin-organize-imports"]
+	"plugins": ["@trivago/prettier-plugin-sort-imports"],
+	"importOrder": [
+		"^@core/(.*)$",
+		"<THIRD_PARTY_MODULES>",
+		"^@lib/(.*)$",
+		"^@components/(.*)$",
+		"^@hooks/(.*)$",
+		"^@utils/(.*)$",
+		"^@types/(.*)$",
+		"^[./]",
+		"^@hooks/(.*)$"
+	],
+	"importOrderSeparation": true,
+	"importOrderSortSpecifiers": true
 }

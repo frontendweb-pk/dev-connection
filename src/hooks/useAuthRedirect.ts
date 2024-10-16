@@ -13,7 +13,7 @@ export default function useAuthRedirect() {
 			if (role === "admin") url = "/admin";
 			router.replace(url);
 		}
-	}, [status, data]);
+	}, [status, router, data]);
 
 	return null;
 }
