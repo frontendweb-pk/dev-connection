@@ -13,7 +13,7 @@ export default function Logo({
   ...rest
 }: LogoProps) {
   const classes = classNames(
-    "text-[24px] font-bold flex items-center justify-center gap-3",
+    "text-[24px] font-bold flex items-center  gap-3",
     className
   );
   return (

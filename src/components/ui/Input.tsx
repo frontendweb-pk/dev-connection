@@ -17,11 +17,11 @@ export default function Input({
   ...rest
 }: InputProps) {
   const classes = classNames(
-    "p-3 ring-1 w-100 rounded-md text-sm outline-none hover:ring-sky-600"
+    "p-3 ring-1 w-full  rounded-md text-sm outline-none hover:ring-sky-600"
   );
   return (
     <FormGroup {...formGroupProps}>
-      <div className="mb-2">
+      <div className="mb-2 w-full">
         {label && <Label {...labelProps}>{label}</Label>}
         <input placeholder={placeholder} className={classes} {...rest} />
       </div>

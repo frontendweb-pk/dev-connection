@@ -1,8 +1,10 @@
+import classNames from "classnames";
+
 type ScreenProps = React.HtmlHTMLAttributes<HTMLDivElement> & {};
 
-export default function Screen({ children, ...rest }: ScreenProps) {
+export default function Screen({ children, className, ...rest }: ScreenProps) {
   return (
-    <div className="h-full" {...rest}>
+    <div className={classNames("h-full", className)} {...rest}>
       {children}
     </div>
   );
