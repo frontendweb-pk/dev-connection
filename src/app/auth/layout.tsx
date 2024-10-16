@@ -1,5 +1,7 @@
-import Screen from "@/components/ui/Screen";
 import { redirect } from "next/navigation";
+
+import Screen from "@/components/ui/Screen";
+
 import { auth } from "../auth";
 
 /**

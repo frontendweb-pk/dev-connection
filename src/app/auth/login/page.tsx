@@ -1,8 +1,11 @@
+import { auth } from "@/app/auth";
+
 import { SignIn } from "@/components/auth/SignIn";
 import Logo from "@/components/layout/Logo";
 import Center from "@/components/ui/Center";
 
 export default async function Page() {
+	const session = await auth();
 	return (
 		<>
 			<Center className="bg-gray-900">
@@ -20,7 +23,7 @@ export default async function Page() {
 				</div>
 			</Center>
 			<Center>
-				<SignIn />
+				<SignIn session={session} />
 			</Center>
 		</>
 	);

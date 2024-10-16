@@ -20,15 +20,15 @@
 	"embeddedLanguageFormatting": "auto",
 	"plugins": ["@trivago/prettier-plugin-sort-imports"],
 	"importOrder": [
-		"^@core/(.*)$",
+		"^react$",
+		"^next/(.*)$",
+		"^@/app/(.*)$",
+		"^@/components/(.*)$",
+		"^@/utils/(.*)$",
+		"^@/lib/(.*)$",
+		"^@/hook/(.*)$",
 		"<THIRD_PARTY_MODULES>",
-		"^@lib/(.*)$",
-		"^@components/(.*)$",
-		"^@hooks/(.*)$",
-		"^@utils/(.*)$",
-		"^@types/(.*)$",
-		"^[./]",
-		"^@hooks/(.*)$"
+		"^[./]"
 	],
 	"importOrderSeparation": true,
 	"importOrderSortSpecifiers": true

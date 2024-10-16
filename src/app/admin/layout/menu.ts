@@ -1,6 +1,5 @@
 import { IMenu } from "@/types";
 import {
-	BookCopyIcon,
 	CogIcon,
 	KeyIcon,
 	LayoutDashboard,

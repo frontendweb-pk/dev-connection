@@ -1,5 +1,6 @@
-import { Logout } from "@/app/actions/auth";
 import { AppContent } from "@/utils/content";
+
+import { Logout } from "@/actions/auth";
 
 import Form from "../ui/Form";
 import FormButton from "../ui/FormButton";

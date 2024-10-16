@@ -1,6 +1,7 @@
 "use client";
 
 import Screen from "@/components/ui/Screen";
+
 import useToggle from "@/hooks/useToggle";
 import classNames from "classnames";
 
@@ -12,7 +13,7 @@ export default function AdminLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	const { open, onClose, onHandleToggle, onOpen } = useToggle();
+	const { open, onHandleToggle } = useToggle();
 	const classes = classNames("transition-transform h-full flex flex-col", {
 		"ml-64 transition-transform": !open,
 	});
