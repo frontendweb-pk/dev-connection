@@ -22,12 +22,13 @@
 	"importOrder": [
 		"^react$",
 		"^next/(.*)$",
-		"^@/app/(.*)$",
-		"^@/components/(.*)$",
-		"^@/utils/(.*)$",
-		"^@/lib/(.*)$",
-		"^@/hook/(.*)$",
 		"<THIRD_PARTY_MODULES>",
+		"^@/actions/(.*)$",
+		"^@/app/(.*)$",
+		"^@/utils/(.*)$",
+		"^@/hooks/(.*)$",
+		"^@/components/(.*)$",
+		"^@/lib/(.*)$",
 		"^[./]"
 	],
 	"importOrderSeparation": true,

@@ -5,7 +5,7 @@ import Navigation from "./Navigation";
 
 export default function Header() {
 	const classes = classNames(
-		"bg-slate-900 py-2-px-3 relative flex items-center justify-between border-b border-gray-200 bg-white px-4 py-4 shadow-sm",
+		"bg-slate-900 relative flex items-center justify-between px-4 py-3 shadow-sm",
 	);
 	return (
 		<header className={classes}>

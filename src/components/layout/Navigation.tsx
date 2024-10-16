@@ -1,11 +1,12 @@
-import { BellIcon, MessageCircle } from "lucide-react";
 import Link from "next/link";
 
-import SignOut from "../auth/SignOut";
+import { BellIcon, MessageCircle } from "lucide-react";
+
+import UserControl from "../shared/UserControl";
 
 export default function Navigation() {
 	return (
-		<nav>
+		<nav className="flex">
 			<ul className="flex items-center gap-5 text-white">
 				<li>
 					<Link href="/admin">
@@ -18,7 +19,7 @@ export default function Navigation() {
 					</Link>
 				</li>
 				<li>
-					<SignOut />
+					<UserControl inline username="PK" />
 				</li>
 			</ul>
 		</nav>

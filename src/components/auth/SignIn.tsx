@@ -1,17 +1,16 @@
 "use client";
 
-import { useEffect } from "react";
-
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+
+import { IZodValidation } from "@/types";
+import { Session } from "next-auth";
+import { useFormState } from "react-dom";
+
+import { login } from "@/actions/auth";
 
 import { AppContent } from "@/utils/content";
 
-import { login } from "@/actions/auth";
-import { IZodValidation } from "@/types";
-import { Session } from "next-auth";
-import { useSession } from "next-auth/react";
-import { useFormState } from "react-dom";
+import useAuthRedirect from "@/hooks/useAuthRedirect";
 
 import Form from "../ui/Form";
 import FormButton from "../ui/FormButton";
@@ -31,21 +30,6 @@ type SigninProps = {
 
 export function SignIn({ session }: SigninProps) {
 	const [state, formAction] = useFormState(login, initialState);
-
-	const router = useRouter();
-	const { status, data } = useSession();
-
-	useEffect(() => {
-		console.log("HI Auth", status, data);
-		if (status === "authenticated") {
-			let url = "/user";
-			const role = data.user.role;
-			if (role === "admin") url = "/admin";
-			router.replace(url);
-		}
-	}, [status, router, data]);
-
-	console.log("S", session);
 
 	return (
 		<>
